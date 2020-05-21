@@ -20,6 +20,7 @@ class solr::install (
   if ! defined(Package[$jetty_package]) {
       package { $jetty_package:
           ensure  => present,
+          alias   => 'jetty',
           require => Package['default-jdk'],
       }
   }
