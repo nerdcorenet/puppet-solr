@@ -19,6 +19,8 @@ class solr::params {
   $jetty_user     = 'jetty'
   $jetty_group    = 'jetty'
 
+  $jetty_extra_package = 'libjetty-extra'
+
   case $::operatingsystem {
     'Debian': {
       case $::operatingsystemmajrelease {

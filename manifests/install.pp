@@ -7,7 +7,8 @@
 #
 
 class solr::install (
-  $jetty_package = $::solr::params::jetty_package
+  $jetty_package       = $::solr::params::jetty_package,
+  $jetty_extra_package = $::solr::params::jetty_extra_package,
   ) inherits ::solr::params
 {
 
@@ -25,9 +26,10 @@ class solr::install (
       }
   }
 
-  if ! defined(Package['libjetty-extra']) {
-      package { 'libjetty-extra':
+  if ! defined(Package[$jetty_extra_package]) {
+      package { $jetty_extra_package:
           ensure  => present,
+          alias   => 'libjetty-extra',
           require => Package[$jetty_package],
       }
   }
