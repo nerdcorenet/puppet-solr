@@ -33,6 +33,12 @@ class solr::config(
   $dl_name        = "solr-${version}.tgz"
   $download_url   = "${mirror}/${version}/${dl_name}"
 
+  if (${version} > '8.0.0') {
+    extract_path => 'server/lib/ext'
+  } else {
+    extract_path => 'example/lib/ext'
+  }
+
   #Copy the jetty config file
   file { "/etc/default/${jetty_service}":
     ensure  => file,
@@ -70,7 +76,7 @@ class solr::config(
   exec { 'copy-solr':
     path    => [ '/bin', '/sbin' , '/usr/bin', '/usr/sbin', '/usr/local/bin' ],
     command =>  "jar xvf ${dist_root}/solr-${version}/dist/solr-${version}.war; \
-    cp ${dist_root}/solr-${version}/example/lib/ext/*.jar WEB-INF/lib",
+    cp ${dist_root}/solr-${version}/${extract_path}/*.jar WEB-INF/lib",
     cwd     =>  $solr_home,
     onlyif  =>  "test ! -d ${solr_home}/WEB-INF",
     require =>  Exec['extract-solr'],
