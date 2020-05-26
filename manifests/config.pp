@@ -34,9 +34,9 @@ class solr::config(
   $download_url   = "${mirror}/${version}/${dl_name}"
 
   if versioncmp($version, '8.0.0') > 0 {
-    extract_path = 'server/lib/ext'
+    $extract_path = 'server/lib/ext'
   } else {
-    extract_path = 'example/lib/ext'
+    $extract_path = 'example/lib/ext'
   }
 
   #Copy the jetty config file
