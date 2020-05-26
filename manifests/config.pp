@@ -33,7 +33,7 @@ class solr::config(
   $dl_name        = "solr-${version}.tgz"
   $download_url   = "${mirror}/${version}/${dl_name}"
 
-  if (${version} > '8.0.0') {
+  if versioncmp($version, '8.0.0') > 0 {
     extract_path => 'server/lib/ext'
   } else {
     extract_path => 'example/lib/ext'
